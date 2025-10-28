@@ -38,6 +38,7 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
         }
         .btn-igneous { background-color: var(--color-igneous); }
+        .btn-igneous-ext { background-color: #ef4444; } /* Slightly different red for clarity */
         .btn-sedimentary { background-color: var(--color-sedimentary); }
         .btn-metamorphic { background-color: var(--color-metamorphic); }
 
@@ -117,9 +118,10 @@
                         <p id="question-text" class="text-2xl font-light text-white leading-relaxed">...</p>
                     </div>
 
-                    <!-- Answer Buttons -->
-                    <div id="answer-buttons" class="grid grid-cols-3 gap-4">
-                        <button class="btn-rock btn-igneous" data-answer="Igneous">Igneous</button>
+                    <!-- Answer Buttons (Updated to 4 options) -->
+                    <div id="answer-buttons" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <button class="btn-rock btn-igneous" data-answer="Intrusive Igneous">Intrusive Igneous</button>
+                        <button class="btn-rock btn-igneous-ext" data-answer="Extrusive Igneous">Extrusive Igneous</button>
                         <button class="btn-rock btn-sedimentary" data-answer="Sedimentary">Sedimentary</button>
                         <button class="btn-rock btn-metamorphic" data-answer="Metamorphic">Metamorphic</button>
                     </div>
@@ -147,23 +149,31 @@
                     </div>
 
                     <div class="space-y-6">
-                        <!-- Igneous Card -->
+                        <!-- Intrusive Igneous Card -->
                         <div class="p-4 rounded-xl border-t-8 border-red-600 bg-gray-700">
                             <h3 class="text-3xl font-extrabold text-red-400 mb-2 flex items-center">
-                                Igneous 🔥
-                                <span class="text-sm font-normal text-gray-400 ml-3">(Ignis = Fire)</span>
+                                Intrusive Igneous 🌋
+                                <span class="text-sm font-normal text-gray-400 ml-3">(Cools SLOWLY Underground)</span>
                             </h3>
-                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: Cooling from **Magma/Lava**.</p>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: Slow cooling of Magma below the surface.</p>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
-                                <div class="p-3 bg-red-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">🧊 Large Crystals (Intrusive)</p>
-                                    <p class="text-sm">Slow cooling **deep underground** gives crystals time to grow large.</p>
-                                </div>
-                                <div class="p-3 bg-red-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">🌬️ Glassy / Bubbles (Extrusive)</p>
-                                    <p class="text-sm">Quick cooling **on the surface** traps gas bubbles or prevents crystal growth.</p>
-                                </div>
+                            <div class="p-3 bg-red-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">🧊 Clue: Large Crystals</p>
+                                <p class="text-sm">Slow cooling allows mineral crystals time to grow large and interlock (e.g., Granite).</p>
+                            </div>
+                        </div>
+
+                        <!-- Extrusive Igneous Card -->
+                        <div class="p-4 rounded-xl border-t-8 border-red-800 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-red-500 mb-2 flex items-center">
+                                Extrusive Igneous 🔥
+                                <span class="text-sm font-normal text-gray-400 ml-3">(Cools QUICKLY on Surface)</span>
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: Rapid cooling of Lava on the surface.</p>
+                            
+                            <div class="p-3 bg-red-800/20 rounded-lg">
+                                <p class="font-bold text-xl mb-1">🌬️ Clue: Glassy or Bubbles/Holes</p>
+                                <p class="text-sm">Quick cooling traps gas (creating holes) or prevents crystallization (creating glassy textures).</p>
                             </div>
                         </div>
 
@@ -177,12 +187,12 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
                                 <div class="p-3 bg-orange-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">🐚 Fossils / Visible Fragments</p>
-                                    <p class="text-sm">These rocks form in layers and are the only type that can contain plant/animal remnants.</p>
+                                    <p class="font-bold text-xl mb-1">🐚 Clue: Fossils / Visible Fragments</p>
+                                    <p class="text-sm">The only rock type that preserves fossils. Shows layers of fragments (sand, pebbles, etc.).</p>
                                 </div>
                                 <div class="p-3 bg-orange-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">🦴 Soft & Crumbly</p>
-                                    <p class="text-sm">They are held together by cementation (glue), not tightly interlocking crystals, making them softer.</p>
+                                    <p class="font-bold text-xl mb-1">🦴 Clue: Soft & Crumbly</p>
+                                    <p class="text-sm">Held together by cementation, making it generally softer and easier to break.</p>
                                 </div>
                             </div>
                         </div>
@@ -197,12 +207,12 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
                                 <div class="p-3 bg-indigo-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">Ribbonlike Layers (Foliation)</p>
-                                    <p class="text-sm">Extreme pressure squeezes the minerals into visible parallel bands or sheets.</p>
+                                    <p class="font-bold text-xl mb-1">Clue: Ribbonlike Layers (Foliation)</p>
+                                    <p class="text-sm">Pressure squeezes minerals into visible parallel bands or sheets.</p>
                                 </div>
                                 <div class="p-3 bg-indigo-800/20 rounded-lg">
-                                    <p class="font-bold text-xl mb-1">💎 Shiny Crystals</p>
-                                    <p class="text-sm">New, shiny mineral crystals grow slowly while the rock is under high heat and pressure.</p>
+                                    <p class="font-bold text-xl mb-1">💎 Clue: Shiny Crystals</p>
+                                    <p class="text-sm">New, shiny mineral crystals grow while the rock is under high heat and pressure.</p>
                                 </div>
                             </div>
                         </div>
@@ -222,55 +232,63 @@
     </div>
 
     <script>
-        // Data structure for the quiz
+        // Data structure for the quiz (Updated for 4 rock types + process questions)
         const quizData = [
+            // Intrusive Igneous (Clue)
             {
-                question: "This rock cooled **slowly underground** from magma, allowing **large, visible crystals** to form (like Granite). What rock type is it?",
-                answer: "Igneous",
-                explanation: "Correct! Rocks that cool slowly and beneath the surface are **Intrusive Igneous**. Slow cooling gives mineral crystals time to grow large enough to be easily seen. (See: Igneous, Clue: Large Crystals)",
-                clue_type: "Igneous",
+                question: "This rock cooled **slowly underground** from magma, allowing **large, interlocking crystals** (like Granite). What rock type is it?",
+                answer: "Intrusive Igneous",
+                explanation: "Correct! Slow cooling deep beneath the surface is the signature of **Intrusive Igneous** rock formation, giving crystals maximum time to grow large.",
+                clue_type: "Intrusive Igneous",
             },
+            // Extrusive Igneous (Clue)
             {
-                question: "This rock contains **fossils** or visible, layered pieces of sand and pebbles. What rock type is it?",
+                question: "This rock has a **glassy, smooth surface** or contains **gas bubbles/holes** (like Pumice/Obsidian). What rock type is it?",
+                answer: "Extrusive Igneous",
+                explanation: "Correct! Rapid cooling **on the surface** from lava causes tiny crystals or traps gas bubbles, identifying it as **Extrusive Igneous** rock.",
+                clue_type: "Extrusive Igneous",
+            },
+            // Sedimentary (Clue)
+            {
+                question: "This rock contains **fossils**, visible layered fragments, or sand and pebbles cemented together. What rock type is it?",
                 answer: "Sedimentary",
-                explanation: "Correct! The presence of fossils or fragmented materials (sediment) is the hallmark of **Sedimentary** rocks, which form through the compression of layered sediment. (See: Sedimentary, Clue: Fossils)",
+                explanation: "Correct! **Sedimentary** rocks are formed from fragments (sediment) and are the only type that preserves fossils from compaction and cementation.",
                 clue_type: "Sedimentary",
             },
+            // Metamorphic (Clue)
             {
-                question: "This rock displays **ribbonlike layers** (foliation) and was changed due to intense **heat and pressure** (metamorphosis). What rock type is it?",
+                question: "This rock displays **ribbonlike layers (foliation)** and was changed due to intense **heat and pressure** (metamorphosis). What rock type is it?",
                 answer: "Metamorphic",
-                explanation: "Correct! **Metamorphic** rocks are 'changed-form' rocks. The intense pressure aligns minerals into those characteristic ribbonlike or banded layers (Gneiss is a great example). (See: Metamorphic, Clue: Ribbonlike Layers)",
+                explanation: "Correct! The alignment of minerals under pressure creates the ribbonlike layers typical of **Metamorphic** rocks.",
                 clue_type: "Metamorphic",
             },
+            // PROCESS Question: Melting to Igneous
             {
-                question: "This rock has a **glassy, smooth surface** or contains **gas bubbles/holes** (like Pumice or Obsidian). What rock type is it?",
-                answer: "Igneous",
-                explanation: "Correct! A glassy or bubble-filled texture indicates **Extrusive Igneous** rock. It cooled so quickly on the surface from lava that either crystals couldn't form, or trapped gases left holes. (See: Igneous, Clue: Glassy / Bubbles)",
-                clue_type: "Igneous",
+                question: "The process of **Melting** any rock followed by **Cooling and Crystallization** leads directly to which rock type?",
+                answer: "Intrusive Igneous", 
+                explanation: "Correct! Melting pre-existing rock creates magma, and the subsequent cooling (typically slow and underground) forms **Intrusive Igneous** rock.",
+                clue_type: "Process",
             },
+            // PROCESS Question: Weathering to Sedimentary
             {
-                question: "This rock's formation process begins with **weathering and erosion**. What is the resulting rock type after compaction?",
+                question: "Which rock type is formed as a direct result of **Weathering, Erosion, Deposition, and Cementation**?",
                 answer: "Sedimentary",
-                explanation: "Correct! Weathering breaks down rocks into sediment, which is then transported, deposited, and eventually compacted and cemented to form **Sedimentary** rock. (See: Sedimentary, Process)",
-                clue_type: "Sedimentary",
+                explanation: "Correct! These four processes—breaking down, moving, settling, and gluing—are the cycle that results in **Sedimentary** rock formation.",
+                clue_type: "Process",
             },
+            // PROCESS Question: Heat/Pressure to Metamorphic
             {
-                question: "Which rock type is formed directly from the **melting and cooling** of pre-existing material?",
-                answer: "Igneous",
-                explanation: "Correct! **Igneous** rocks are fire-formed (from 'ignis'). Whether it's magma underground or lava on the surface, the key process is crystallization from a molten state. (See: Igneous, Process)",
-                clue_type: "Igneous",
-            },
-            {
-                question: "If a rock is subjected to intense squeezing and heating **without melting**, it will become which type of rock?",
+                question: "A rock subjected to high **Heat and Pressure** deep underground (but **NOT melting**) will change into which rock type?",
                 answer: "Metamorphic",
-                explanation: "Correct! The key is 'without melting.' If it melted, it would become igneous. Since it's squeezed and heated, its structure is changed, making it **Metamorphic**. (See: Metamorphic, Process)",
-                clue_type: "Metamorphic",
+                explanation: "Correct! When a rock is subjected to intense heat and pressure without fully melting, it undergoes a transformation called metamorphosis, forming a **Metamorphic** rock.",
+                clue_type: "Process",
             },
+            // PROCESS Question: Lava Cooling
             {
-                question: "This rock type is fairly soft and may break apart or **crumble easily** because it's only held together by cementation. What rock type is it?",
-                answer: "Sedimentary",
-                explanation: "Correct! **Sedimentary** rocks are often the softest because they are cemented fragments, not interlocked crystals (igneous) or tightly bonded minerals (metamorphic). (See: Sedimentary, Clue: Soft & Crumbly)",
-                clue_type: "Sedimentary",
+                question: "The rapid cooling of **Lava** after a **Volcanic Eruption** forms which specific rock type?",
+                answer: "Extrusive Igneous",
+                explanation: "Correct! **Extrusive Igneous** rocks cool rapidly on the Earth's surface from lava, resulting in fine-grained or glassy textures.",
+                clue_type: "Process",
             }
         ].sort(() => Math.random() - 0.5); // Shuffle the questions
 
@@ -278,10 +296,8 @@
         let score = 0;
         const totalQuestions = quizData.length;
 
-        // 🛑 IMPORTANT: REPLACE THIS PLACEHOLDER URL WITH YOUR ACTUAL GITHUB RAW IMAGE URL! 🛑
-        // Example structure for a GitHub Raw URL:
-        // const rockCycleDiagramUrl = "https://raw.githubusercontent.com/YourUsername/YourRepo/main/images/rock-cycle-diagram.jpg";
-        const rockCycleDiagramUrl = "https://github.com/srikantsortur-tech/Geo-b4-rockcycle/blob/main/images/rock_cycle_diagram.png"; 
+        // 🟢 FIX: Updated to the correct GitHub "Raw" content URL.
+        const rockCycleDiagramUrl = "https://raw.githubusercontent.com/srikantsortur-tech/Geo-b4-rockcycle/main/images/rock_cycle_diagram.png"; 
         
         // This is the HTML structure for the diagram (using the image URL)
         const rockCycleDiagramHtml = `<img src="${rockCycleDiagramUrl}" onerror="this.onerror=null; this.src='https://placehold.co/800x450/cc5500/ffffff?text=Image+Loading+Error.+Check+GitHub+URL';" alt="Full Rock Cycle Diagram showing Igneous, Sedimentary, and Metamorphic rock processes and transitions." class="diagram-image">`;
@@ -349,7 +365,17 @@
             nextButton.classList.add('hidden');
             Array.from(answerButtonsContainer.children).forEach(button => {
                 button.disabled = false;
-                button.className = `btn-rock btn-${button.dataset.answer.toLowerCase()}`;
+                button.classList.remove('correct-answer', 'incorrect-answer');
+                // Reapply original class based on data-answer (important for the updated 4 buttons)
+                const answerType = button.dataset.answer;
+                button.className = 'btn-rock';
+                if (answerType.includes('Intrusive') || answerType.includes('Igneous')) {
+                    button.classList.add(answerType.includes('Extrusive') ? 'btn-igneous-ext' : 'btn-igneous');
+                } else if (answerType.includes('Sedimentary')) {
+                    button.classList.add('btn-sedimentary');
+                } else if (answerType.includes('Metamorphic')) {
+                    button.classList.add('btn-metamorphic');
+                }
             });
 
             // Update question text
