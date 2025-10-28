@@ -67,6 +67,13 @@
         .tab-btn:not(.active):hover {
             color: #fff;
         }
+
+        /* Responsive Image Styling */
+        .diagram-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +99,17 @@
                 <!-- --- QUIZ VIEW --- -->
                 <div id="quiz-view">
                     <h2 class="text-2xl font-bold border-b pb-3 border-gray-600">Classification Challenge</h2>
+                    
+                    <!-- Diagram Toggle (New) -->
+                    <div class="mb-4 text-center">
+                        <button id="toggle-diagram" onclick="toggleDiagram()" class="text-sm text-gray-300 hover:text-sky-400 focus:outline-none">
+                            [Click to Toggle Rock Cycle Diagram]
+                        </button>
+                        <div id="quiz-diagram-container" class="mt-4 p-3 bg-gray-800 rounded-lg hidden">
+                            <!-- Image will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
 
                     <!-- Question Area -->
                     <div class="bg-gray-700 p-4 rounded-lg shadow-inner">
@@ -119,6 +137,14 @@
                 <div id="cheat-sheet-view" class="hidden">
                     <h2 class="text-2xl font-bold border-b pb-3 border-gray-600 text-sky-400">The Rock Cycle Cheat Sheet</h2>
                     <p class="text-gray-300 mb-6">Master the rock types by linking the process to the visual clues.</p>
+
+                    <!-- Rock Cycle Diagram (New) -->
+                    <div class="mb-8 p-4 bg-gray-800 rounded-xl">
+                        <h3 class="text-xl font-bold text-teal-400 mb-3">Full Rock Cycle Diagram</h3>
+                        <div id="cheat-sheet-diagram-container">
+                             <!-- Image will be inserted here by JavaScript -->
+                        </div>
+                    </div>
 
                     <div class="space-y-6">
                         <!-- Igneous Card -->
@@ -252,6 +278,15 @@
         let score = 0;
         const totalQuestions = quizData.length;
 
+        // 🛑 IMPORTANT: REPLACE THIS PLACEHOLDER URL WITH YOUR ACTUAL GITHUB RAW IMAGE URL! 🛑
+        // Example structure for a GitHub Raw URL:
+        // const rockCycleDiagramUrl = "https://raw.githubusercontent.com/YourUsername/YourRepo/main/images/rock-cycle-diagram.jpg";
+        const rockCycleDiagramUrl = "https://github.com/srikantsortur-tech/Geo-b4-rockcycle/blob/main/images/rock_cycle_diagram.png"; 
+        
+        // This is the HTML structure for the diagram (using the image URL)
+        const rockCycleDiagramHtml = `<img src="${rockCycleDiagramUrl}" onerror="this.onerror=null; this.src='https://placehold.co/800x450/cc5500/ffffff?text=Image+Loading+Error.+Check+GitHub+URL';" alt="Full Rock Cycle Diagram showing Igneous, Sedimentary, and Metamorphic rock processes and transitions." class="diagram-image">`;
+
+
         // DOM elements
         const questionNumberEl = document.getElementById('question-number');
         const questionTextEl = document.getElementById('question-text');
@@ -266,6 +301,9 @@
         const cheatSheetView = document.getElementById('cheat-sheet-view');
         const tabQuiz = document.getElementById('tab-quiz');
         const tabCheatSheet = document.getElementById('tab-cheat-sheet');
+        
+        const quizDiagramContainer = document.getElementById('quiz-diagram-container');
+        const cheatSheetDiagramContainer = document.getElementById('cheat-sheet-diagram-container');
 
         // --- VIEW SWITCHING LOGIC ---
         window.switchView = function(viewName) {
@@ -285,7 +323,17 @@
                 tabQuiz.classList.add('text-gray-400');
             }
         }
-
+        
+        // --- DIAGRAM TOGGLE LOGIC ---
+        window.toggleDiagram = function() {
+            quizDiagramContainer.classList.toggle('hidden');
+            const button = document.getElementById('toggle-diagram');
+            if (quizDiagramContainer.classList.contains('hidden')) {
+                button.textContent = '[Click to Toggle Rock Cycle Diagram]';
+            } else {
+                button.textContent = '[Click to Hide Rock Cycle Diagram]';
+            }
+        }
 
         // Function to load the current question
         function loadQuestion() {
@@ -372,11 +420,15 @@
             nextButton.classList.add('hidden');
         }
 
-        // Event listener setup
-        answerButtonsContainer.addEventListener('click', selectAnswer);
-
-        // Initial load
-        window.onload = loadQuestion;
+        // Initial setup
+        window.onload = function() {
+            // Insert the HTML image into both containers
+            quizDiagramContainer.innerHTML = rockCycleDiagramHtml;
+            cheatSheetDiagramContainer.innerHTML = rockCycleDiagramHtml;
+            loadQuestion();
+            // Attach event listener to answer buttons
+            answerButtonsContainer.addEventListener('click', selectAnswer);
+        };
     </script>
 
 </body>
