@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 9 Rock Cycle Challenge</title>
+    <!-- Load Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the geological theme */
+        :root {
+            --color-igneous: #b91c1c; /* Deep Red */
+            --color-sedimentary: #fb923c; /* Orange/Brown */
+            --color-metamorphic: #4f46e5; /* Deep Purple/Blue */
+            --color-bg: #1f2937; /* Dark Slate */
+            --color-text: #f9fafb; /* Light Gray */
+            --color-card: #374151; /* Medium Slate */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card {
+            background-color: var(--color-card);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
+        .btn-rock {
+            transition: all 0.2s;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+        .btn-igneous { background-color: var(--color-igneous); }
+        .btn-sedimentary { background-color: var(--color-sedimentary); }
+        .btn-metamorphic { background-color: var(--color-metamorphic); }
+
+        .btn-rock:hover:not(:disabled) {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        .correct-answer {
+            background-color: #10b981 !important; /* Green */
+        }
+        .incorrect-answer {
+            background-color: #ef4444 !important; /* Red */
+        }
+        .tab-btn {
+            font-size: 1.125rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-btn.active {
+            color: #38bdf8; /* Sky Blue */
+            border-color: #38bdf8;
+            background-color: #374151;
+        }
+        .tab-btn:not(.active):hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="w-full max-w-5xl p-4 md:p-8 space-y-6">
+        <header class="text-center">
+            <h1 class="text-4xl font-extrabold text-white mb-2">The Rock Cycle: Study & Challenge</h1>
+            <p class="text-xl text-gray-400">Review the cheat sheet, then test your classification skills!</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="flex space-x-2">
+            <button id="tab-quiz" class="tab-btn active" onclick="switchView('quiz')">Quiz Challenge</button>
+            <button id="tab-cheat-sheet" class="tab-btn text-gray-400" onclick="switchView('cheat-sheet')">Cheat Sheet</button>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Main View Column (Quiz or Cheat Sheet) -->
+            <div id="main-view-container" class="lg:col-span-2 card p-6 space-y-6">
+
+                <!-- --- QUIZ VIEW --- -->
+                <div id="quiz-view">
+                    <h2 class="text-2xl font-bold border-b pb-3 border-gray-600">Classification Challenge</h2>
+
+                    <!-- Question Area -->
+                    <div class="bg-gray-700 p-4 rounded-lg shadow-inner">
+                        <p id="question-number" class="text-sm font-semibold text-gray-400 mb-2">Clue 1/8</p>
+                        <p id="question-text" class="text-2xl font-light text-white leading-relaxed">...</p>
+                    </div>
+
+                    <!-- Answer Buttons -->
+                    <div id="answer-buttons" class="grid grid-cols-3 gap-4">
+                        <button class="btn-rock btn-igneous" data-answer="Igneous">Igneous</button>
+                        <button class="btn-rock btn-sedimentary" data-answer="Sedimentary">Sedimentary</button>
+                        <button class="btn-rock btn-metamorphic" data-answer="Metamorphic">Metamorphic</button>
+                    </div>
+
+                    <!-- Feedback Area -->
+                    <div id="feedback-area" class="min-h-[100px] p-4 rounded-lg hidden transition-all duration-300">
+                        <h3 id="feedback-title" class="text-xl font-bold mb-2"></h3>
+                        <p id="feedback-explanation" class="text-lg"></p>
+                    </div>
+
+                    <button id="next-button" class="w-full bg-gray-500 hover:bg-gray-400 text-white font-bold py-3 rounded-lg mt-4 hidden transition-colors" onclick="nextQuestion()">Next Clue &rarr;</button>
+                </div>
+
+                <!-- --- CHEAT SHEET VIEW (Visual Cards) --- -->
+                <div id="cheat-sheet-view" class="hidden">
+                    <h2 class="text-2xl font-bold border-b pb-3 border-gray-600 text-sky-400">The Rock Cycle Cheat Sheet</h2>
+                    <p class="text-gray-300 mb-6">Master the rock types by linking the process to the visual clues.</p>
+
+                    <div class="space-y-6">
+                        <!-- Igneous Card -->
+                        <div class="p-4 rounded-xl border-t-8 border-red-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-red-400 mb-2 flex items-center">
+                                Igneous 🔥
+                                <span class="text-sm font-normal text-gray-400 ml-3">(Ignis = Fire)</span>
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: Cooling from **Magma/Lava**.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
+                                <div class="p-3 bg-red-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">🧊 Large Crystals (Intrusive)</p>
+                                    <p class="text-sm">Slow cooling **deep underground** gives crystals time to grow large.</p>
+                                </div>
+                                <div class="p-3 bg-red-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">🌬️ Glassy / Bubbles (Extrusive)</p>
+                                    <p class="text-sm">Quick cooling **on the surface** traps gas bubbles or prevents crystal growth.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sedimentary Card -->
+                        <div class="p-4 rounded-xl border-t-8 border-orange-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-orange-400 mb-2 flex items-center">
+                                Sedimentary 🧱
+                                <span class="text-sm font-normal text-gray-400 ml-3">(Sediment = Fragments)</span>
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: **Weathering/Erosion** $\to$ **Compaction/Cementation**.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
+                                <div class="p-3 bg-orange-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">🐚 Fossils / Visible Fragments</p>
+                                    <p class="text-sm">These rocks form in layers and are the only type that can contain plant/animal remnants.</p>
+                                </div>
+                                <div class="p-3 bg-orange-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">🦴 Soft & Crumbly</p>
+                                    <p class="text-sm">They are held together by cementation (glue), not tightly interlocking crystals, making them softer.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metamorphic Card -->
+                        <div class="p-4 rounded-xl border-t-8 border-indigo-600 bg-gray-700">
+                            <h3 class="text-3xl font-extrabold text-indigo-400 mb-2 flex items-center">
+                                Metamorphic 〰️
+                                <span class="text-sm font-normal text-gray-400 ml-3">(Metamorphosis = Change)</span>
+                            </h3>
+                            <p class="text-lg font-semibold text-gray-300 mb-3">Primary Process: Intense **Heat** $\boldsymbol{\&}$ **Pressure** (without melting).</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-200">
+                                <div class="p-3 bg-indigo-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">Ribbonlike Layers (Foliation)</p>
+                                    <p class="text-sm">Extreme pressure squeezes the minerals into visible parallel bands or sheets.</p>
+                                </div>
+                                <div class="p-3 bg-indigo-800/20 rounded-lg">
+                                    <p class="font-bold text-xl mb-1">💎 Shiny Crystals</p>
+                                    <p class="text-sm">New, shiny mineral crystals grow slowly while the rock is under high heat and pressure.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Score/Reference Column -->
+            <div class="lg:col-span-1 space-y-6">
+                <div id="score-box" class="card p-4 text-center">
+                    <p class="text-lg font-semibold text-gray-400">Your Current Score:</p>
+                    <p id="score-display" class="text-5xl font-extrabold text-teal-400">0/0</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data structure for the quiz
+        const quizData = [
+            {
+                question: "This rock cooled **slowly underground** from magma, allowing **large, visible crystals** to form (like Granite). What rock type is it?",
+                answer: "Igneous",
+                explanation: "Correct! Rocks that cool slowly and beneath the surface are **Intrusive Igneous**. Slow cooling gives mineral crystals time to grow large enough to be easily seen. (See: Igneous, Clue: Large Crystals)",
+                clue_type: "Igneous",
+            },
+            {
+                question: "This rock contains **fossils** or visible, layered pieces of sand and pebbles. What rock type is it?",
+                answer: "Sedimentary",
+                explanation: "Correct! The presence of fossils or fragmented materials (sediment) is the hallmark of **Sedimentary** rocks, which form through the compression of layered sediment. (See: Sedimentary, Clue: Fossils)",
+                clue_type: "Sedimentary",
+            },
+            {
+                question: "This rock displays **ribbonlike layers** (foliation) and was changed due to intense **heat and pressure** (metamorphosis). What rock type is it?",
+                answer: "Metamorphic",
+                explanation: "Correct! **Metamorphic** rocks are 'changed-form' rocks. The intense pressure aligns minerals into those characteristic ribbonlike or banded layers (Gneiss is a great example). (See: Metamorphic, Clue: Ribbonlike Layers)",
+                clue_type: "Metamorphic",
+            },
+            {
+                question: "This rock has a **glassy, smooth surface** or contains **gas bubbles/holes** (like Pumice or Obsidian). What rock type is it?",
+                answer: "Igneous",
+                explanation: "Correct! A glassy or bubble-filled texture indicates **Extrusive Igneous** rock. It cooled so quickly on the surface from lava that either crystals couldn't form, or trapped gases left holes. (See: Igneous, Clue: Glassy / Bubbles)",
+                clue_type: "Igneous",
+            },
+            {
+                question: "This rock's formation process begins with **weathering and erosion**. What is the resulting rock type after compaction?",
+                answer: "Sedimentary",
+                explanation: "Correct! Weathering breaks down rocks into sediment, which is then transported, deposited, and eventually compacted and cemented to form **Sedimentary** rock. (See: Sedimentary, Process)",
+                clue_type: "Sedimentary",
+            },
+            {
+                question: "Which rock type is formed directly from the **melting and cooling** of pre-existing material?",
+                answer: "Igneous",
+                explanation: "Correct! **Igneous** rocks are fire-formed (from 'ignis'). Whether it's magma underground or lava on the surface, the key process is crystallization from a molten state. (See: Igneous, Process)",
+                clue_type: "Igneous",
+            },
+            {
+                question: "If a rock is subjected to intense squeezing and heating **without melting**, it will become which type of rock?",
+                answer: "Metamorphic",
+                explanation: "Correct! The key is 'without melting.' If it melted, it would become igneous. Since it's squeezed and heated, its structure is changed, making it **Metamorphic**. (See: Metamorphic, Process)",
+                clue_type: "Metamorphic",
+            },
+            {
+                question: "This rock type is fairly soft and may break apart or **crumble easily** because it's only held together by cementation. What rock type is it?",
+                answer: "Sedimentary",
+                explanation: "Correct! **Sedimentary** rocks are often the softest because they are cemented fragments, not interlocked crystals (igneous) or tightly bonded minerals (metamorphic). (See: Sedimentary, Clue: Soft & Crumbly)",
+                clue_type: "Sedimentary",
+            }
+        ].sort(() => Math.random() - 0.5); // Shuffle the questions
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        // DOM elements
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerButtonsContainer = document.getElementById('answer-buttons');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitleEl = document.getElementById('feedback-title');
+        const feedbackExplanationEl = document.getElementById('feedback-explanation');
+        const nextButton = document.getElementById('next-button');
+        const scoreDisplay = document.getElementById('score-display');
+        
+        const quizView = document.getElementById('quiz-view');
+        const cheatSheetView = document.getElementById('cheat-sheet-view');
+        const tabQuiz = document.getElementById('tab-quiz');
+        const tabCheatSheet = document.getElementById('tab-cheat-sheet');
+
+        // --- VIEW SWITCHING LOGIC ---
+        window.switchView = function(viewName) {
+            if (viewName === 'quiz') {
+                quizView.classList.remove('hidden');
+                cheatSheetView.classList.add('hidden');
+                tabQuiz.classList.add('active');
+                tabCheatSheet.classList.remove('active');
+                tabQuiz.classList.remove('text-gray-400');
+                tabCheatSheet.classList.add('text-gray-400');
+            } else if (viewName === 'cheat-sheet') {
+                quizView.classList.add('hidden');
+                cheatSheetView.classList.remove('hidden');
+                tabCheatSheet.classList.add('active');
+                tabQuiz.classList.remove('active');
+                tabCheatSheet.classList.remove('text-gray-400');
+                tabQuiz.classList.add('text-gray-400');
+            }
+        }
+
+
+        // Function to load the current question
+        function loadQuestion() {
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+                return;
+            }
+
+            const currentQ = quizData[currentQuestionIndex];
+            
+            // Reset UI
+            feedbackArea.classList.add('hidden');
+            nextButton.classList.add('hidden');
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.disabled = false;
+                button.className = `btn-rock btn-${button.dataset.answer.toLowerCase()}`;
+            });
+
+            // Update question text
+            questionNumberEl.textContent = `Clue ${currentQuestionIndex + 1}/${totalQuestions}`;
+            questionTextEl.innerHTML = currentQ.question;
+            scoreDisplay.textContent = `${score}/${currentQuestionIndex}`;
+        }
+
+        // Function to handle the user's answer
+        function selectAnswer(event) {
+            const selectedButton = event.target;
+            if (!selectedButton.classList.contains('btn-rock')) return;
+
+            const selectedAnswer = selectedButton.dataset.answer;
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const explanation = quizData[currentQuestionIndex].explanation;
+
+            // Disable all buttons
+            Array.from(answerButtonsContainer.children).forEach(button => {
+                button.disabled = true;
+            });
+
+            // Show feedback
+            feedbackArea.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                selectedButton.classList.add('correct-answer');
+                feedbackArea.style.backgroundColor = 'rgba(16, 185, 129, 0.2)'; // Green transparent
+                feedbackTitleEl.textContent = "That's Correct!";
+                feedbackTitleEl.classList.remove('text-red-400');
+                feedbackTitleEl.classList.add('text-green-400');
+            } else {
+                selectedButton.classList.add('incorrect-answer');
+                // Find the correct button and highlight it
+                const correctButton = Array.from(answerButtonsContainer.children).find(btn => btn.dataset.answer === correctAnswer);
+                correctButton.classList.add('correct-answer');
+
+                feedbackArea.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'; // Red transparent
+                feedbackTitleEl.textContent = "Not Quite. Let's Review!";
+                feedbackTitleEl.classList.remove('text-green-400');
+                feedbackTitleEl.classList.add('text-red-400');
+            }
+
+            feedbackExplanationEl.innerHTML = explanation;
+            scoreDisplay.textContent = `${score}/${currentQuestionIndex + 1}`;
+        }
+
+        // Function to move to the next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // Function to show final results
+        function showResults() {
+            questionNumberEl.textContent = `Challenge Complete!`;
+            questionTextEl.innerHTML = `You finished the quiz! You scored **${score} out of ${totalQuestions}** (${Math.round((score / totalQuestions) * 100)}%). That's a great effort!`;
+
+            answerButtonsContainer.innerHTML = '';
+            feedbackArea.classList.remove('hidden');
+            feedbackArea.style.backgroundColor = 'rgba(74, 222, 128, 0.2)';
+            feedbackTitleEl.textContent = 'Next Steps:';
+            feedbackTitleEl.classList.remove('text-red-400');
+            feedbackTitleEl.classList.add('text-green-400');
+            feedbackExplanationEl.innerHTML = 'Review the questions you missed, or visit the **Cheat Sheet** for a quick refresher. You can refresh the page to restart the challenge!';
+            nextButton.classList.add('hidden');
+        }
+
+        // Event listener setup
+        answerButtonsContainer.addEventListener('click', selectAnswer);
+
+        // Initial load
+        window.onload = loadQuestion;
+    </script>
+
+</body>
+</html>
